@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Tourist Photo Assistant</string>
+    <string name="title_home">Home</string>
+    <string name="title_user">User</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string name="app_family_name">Tourist Photo Assistant</string>
+    <string name="app_subfamily_name">Limited edition</string>
+    <string name="app_version">0.0.0</string>
+</resources>

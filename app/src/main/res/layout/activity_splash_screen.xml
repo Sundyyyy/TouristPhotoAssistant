@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fullscreen_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple_700">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+        <!-- текст для логопипа-->
+                <TextView
+                    android:id="@+id/splash_app_family_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/purple_500"
+                    android:textSize="25pt"
+                    android:textStyle="bold"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/splash_app_subfamily_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:keepScreenOn="true"
+                    android:text="SplashScreen"
+                    android:textColor="@color/purple_200"
+                    android:textSize="20pt"
+                    android:textStyle="bold|italic" />
+
+        <!-- версия приложения-->
+                <TextView
+                    android:id="@+id/splash_version"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:keepScreenOn="true"
+                    android:text="0.0.0"
+                    android:textColor="#33b5e5"
+                    android:textSize="12pt"
+                    android:textStyle="bold" />
+        </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
