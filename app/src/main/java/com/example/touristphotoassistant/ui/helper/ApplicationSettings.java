@@ -16,7 +16,7 @@ import android.view.WindowManager;
 //добавить м AndroidManifest
 //<application
 //           android:name=".ApplicationSettings"
-
+// GitHub Token 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
 //далее вызов там где надо - ApplicationSettings.getContext()
 
 public class ApplicationSettings extends Application {
