@@ -2,6 +2,7 @@ package com.example.touristphotoassistant;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -34,10 +35,6 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.CAMERA
     };
 
-    private RecyclerView recyclerView;
-    private RecyclerviewAdapter recyclerviewAdapter;
-    private RecyclerTouchListener touchListener;
-
     private ActivityMainBinding binding;
 
     @Override
@@ -59,57 +56,12 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        recyclerView = findViewById(R.id.recyclerview);
-        recyclerviewAdapter = new RecyclerviewAdapter(this);
+    }
 
-        final List<Task> taskList = new ArrayList<>();
-        Task task = new Task("Buy Dress","Buy Dress at Shoppershop for coming functions");
-        taskList.add(task);
-        task = new Task("Go For Walk","Wake up 6AM go for walking");
-        taskList.add(task);
-        task = new Task("Office Work","Complete the office works on Time");
-        taskList.add(task);
-        task = new Task("watch Repair","Give watch to service center");
-        taskList.add(task);
-        task = new Task("Recharge Mobile","Recharge for 10$ to my **** number");
-        taskList.add(task);
-        task = new Task("Read book","Read android book completely");
-        taskList.add(task);
-
-        recyclerviewAdapter.setTaskList(taskList);
-        recyclerView.setAdapter(recyclerviewAdapter);
-
-        touchListener = new RecyclerTouchListener(this,recyclerView);
-        touchListener
-                .setClickable(new RecyclerTouchListener.OnRowClickListener() {
-                    @Override
-                    public void onRowClicked(int position) {
-                        Toast.makeText(getApplicationContext(),taskList.get(position).getName(), Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onIndependentViewClicked(int independentViewID, int position) {
-
-                    }
-                })
-                .setSwipeOptionViews(R.id.delete_task,R.id.edit_task)
-                .setSwipeable(R.id.rowFG, R.id.rowBG, new RecyclerTouchListener.OnSwipeOptionsClickListener() {
-                    @Override
-                    public void onSwipeOptionClicked(int viewID, int position) {
-                        switch (viewID){
-                            case R.id.delete_task:
-                                taskList.remove(position);
-                                recyclerviewAdapter.setTaskList(taskList);
-                                break;
-                            case R.id.edit_task:
-                                Toast.makeText(getApplicationContext(),"Edit Not Available",Toast.LENGTH_SHORT).show();
-                                break;
-
-                        }
-                    }
-                });
-        recyclerView.addOnItemTouchListener(touchListener);
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode,resultCode,data);
     }
 
     public static boolean isPermissionsAllowed(){
