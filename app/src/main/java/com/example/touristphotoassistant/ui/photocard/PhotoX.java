@@ -2,25 +2,16 @@ package com.example.touristphotoassistant.ui.photocard;
 
 import android.graphics.Bitmap;
 
-public class Task {
+public class PhotoX {
 
-    private String photoBase64;
     private String photoDesc;
     private Bitmap photo;
 
-    public Task(String photoBase64, String photoDesc, Bitmap photo) {
-        this.photoBase64 = photoBase64;
+    public PhotoX(String photoDesc, Bitmap photo) {
+
         this.photoDesc = photoDesc;
         this.photo = photo;
 
-    }
-
-    public String getPhotoBase64() {
-        return photoBase64;
-    }
-
-    public void setPhotoBase64(String photoBase64) {
-        this.photoBase64 = photoBase64;
     }
 
     public String getPhotoDesc() {

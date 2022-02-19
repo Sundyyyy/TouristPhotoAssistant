@@ -7,10 +7,10 @@ import android.content.Intent;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.example.touristphotoassistant.ui.photocard.PhotoX;
 
-/**
- * Created by denis on 10.03.16.
- */
+import java.util.ArrayList;
+import java.util.List;
 
 //используется для быстрого определения переменной Context в любом месте программы и любом Class
 //добавить м AndroidManifest
@@ -24,11 +24,16 @@ import android.view.WindowManager;
 public class ApplicationSettings extends Application {
     private static ApplicationSettings  instance;
     private static String ApplicationName;
-    public static final String SERVICE_CHANNEL_ID = "WNS_SERVICE_CHANNEL_ID";
-    public static final String CHANNEL_ID = "WNS_CHANNEL_ID";
+
+    private static List<PhotoX> globalPhotoList;
 
     public ApplicationSettings() {
+        globalPhotoList = new ArrayList<>();
         instance = this;
+    }
+
+    public static List<PhotoX> getPhotoList(){
+        return globalPhotoList;
     }
 
     public static Context getContext() {

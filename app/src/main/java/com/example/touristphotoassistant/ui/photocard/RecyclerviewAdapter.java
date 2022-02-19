@@ -17,7 +17,7 @@ import java.util.List;
 
 public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.MyViewHolder> {
     private Context mContext;
-    private List<Task> photoList;
+    private List<PhotoX> photoList;
     public RecyclerviewAdapter(Context context){
         mContext = context;
         photoList = new ArrayList<>();
@@ -30,7 +30,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     }
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Task task = photoList.get(position);
+        PhotoX task = photoList.get(position);
         holder.tvPhoto.setImageBitmap(task.getPhoto());
         holder.tvPhotoDesc.setText(task.getPhotoDesc());
     }
@@ -39,12 +39,12 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
         return photoList.size();
     }
 
-    public void setPhotoList(List<Task> photoList) {
+    public void setPhotoList(List<PhotoX> photoList) {
         this.photoList = photoList;
         notifyDataSetChanged();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvPhotoBase64;
+
         private TextView tvPhotoDesc;
         private ImageView tvPhoto;
 

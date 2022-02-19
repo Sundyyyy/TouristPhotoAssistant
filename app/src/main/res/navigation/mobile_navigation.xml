@@ -12,9 +12,15 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/navigation_about"
+        android:name="com.example.touristphotoassistant.ui.about.AboutFragment"
+        android:label="@string/title_about"
+        tools:layout="@layout/fragment_about" />
+<!--
+    <fragment
         android:id="@+id/navigation_user"
         android:name="com.example.touristphotoassistant.ui.user.UserFragment"
         android:label="@string/title_user"
         tools:layout="@layout/fragment_user" />
-
+-->
 </navigation>

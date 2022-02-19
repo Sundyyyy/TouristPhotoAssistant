@@ -41,7 +41,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:keepScreenOn="true"
-                    android:text="0.0.0"
+                    android:text="@string/app_version"
                     android:textColor="#33b5e5"
                     android:textSize="12pt"
                     android:textStyle="bold" />
