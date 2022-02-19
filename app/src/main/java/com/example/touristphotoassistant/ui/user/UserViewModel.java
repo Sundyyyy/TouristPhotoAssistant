@@ -4,13 +4,17 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.UUID;
+
 public class UserViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
     public UserViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        String uniqueId = UUID.randomUUID().toString();
+
+        mText.setValue("User Id: " + uniqueId);
     }
 
     public LiveData<String> getText() {

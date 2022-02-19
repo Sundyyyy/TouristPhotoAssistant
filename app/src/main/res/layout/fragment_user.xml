@@ -7,14 +7,14 @@
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
     android:stretchColumns="*"
-    android:paddingTop="?attr/actionBarSize"
     android:paddingBottom="?attr/actionBarSize"
     tools:context=".ui.user.UserFragment">
 
 
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp">
 
         <ImageView
             android:id="@+id/imageView"
@@ -22,8 +22,7 @@
             android:layout_height="120dp"
             android:src="@drawable/messaging_user"
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="16dp"
-            />
+            tools:layout_editor_absoluteY="16dp" />
     </TableRow>
 
     <TableRow
@@ -43,6 +42,7 @@
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
         android:orientation="vertical">
 
         <RadioButton

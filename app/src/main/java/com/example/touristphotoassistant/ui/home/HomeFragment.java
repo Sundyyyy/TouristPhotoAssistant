@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.example.touristphotoassistant.ui.photocard.RecyclerviewAdapter;
 import com.example.touristphotoassistant.ui.photocard.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +68,7 @@ public class HomeFragment extends Fragment {
         recyclerviewAdapter = new RecyclerviewAdapter(this.getContext()); //this
 
         taskList = new ArrayList<>();
+        /*
         Task task = new Task("Buy Dress","Buy Dress at Shoppershop for coming functions");
         taskList.add(task);
         task = new Task("Go For Walk","Wake up 6AM go for walking");
@@ -78,8 +81,9 @@ public class HomeFragment extends Fragment {
         taskList.add(task);
         task = new Task("Read book","Read android book completely");
         taskList.add(task);
+         */
 
-        recyclerviewAdapter.setTaskList(taskList);
+        recyclerviewAdapter.setPhotoList(taskList);
         recyclerView.setAdapter(recyclerviewAdapter);
 
         touchListener = new RecyclerTouchListener(getActivity(),recyclerView); //this
@@ -87,7 +91,7 @@ public class HomeFragment extends Fragment {
                 .setClickable(new RecyclerTouchListener.OnRowClickListener() {
                     @Override
                     public void onRowClicked(int position) {
-                        Toast.makeText(ApplicationSettings.getContext(),taskList.get(position).getName(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ApplicationSettings.getContext(),taskList.get(position).getPhotoDesc(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -102,7 +106,7 @@ public class HomeFragment extends Fragment {
                         switch (viewID){
                             case R.id.delete_task:
                                 taskList.remove(position);
-                                recyclerviewAdapter.setTaskList(taskList);
+                                recyclerviewAdapter.setPhotoList(taskList);
                                 break;
                             case R.id.edit_task:
                                 Toast.makeText(getActivity(),"Edit Not Available",Toast.LENGTH_SHORT).show();
@@ -135,11 +139,19 @@ public class HomeFragment extends Fragment {
     {
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK)
         {
-            Task task = new Task("Test","test");
-            taskList.add(task);
-            recyclerviewAdapter.setTaskList(taskList);
             Bitmap photo = (Bitmap) data.getExtras().get("data");
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            photo.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] b = baos.toByteArray();
+            String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+            Task task = new Task(encodedImage,encodedImage, photo);
+            taskList.add(task);
+
+            recyclerviewAdapter.setPhotoList(taskList);
+            //Bitmap photo = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(photo);
+
         }
     }
 

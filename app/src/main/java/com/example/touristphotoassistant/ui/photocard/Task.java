@@ -1,28 +1,41 @@
 package com.example.touristphotoassistant.ui.photocard;
 
+import android.graphics.Bitmap;
+
 public class Task {
 
-    private String name;
-    private String desc;
+    private String photoBase64;
+    private String photoDesc;
+    private Bitmap photo;
 
-    public Task(String name, String desc) {
-        this.name = name;
-        this.desc = desc;
+    public Task(String photoBase64, String photoDesc, Bitmap photo) {
+        this.photoBase64 = photoBase64;
+        this.photoDesc = photoDesc;
+        this.photo = photo;
+
     }
 
-    public String getName() {
-        return name;
+    public String getPhotoBase64() {
+        return photoBase64;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPhotoBase64(String photoBase64) {
+        this.photoBase64 = photoBase64;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getPhotoDesc() {
+        return photoDesc;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDesc(String photoDesc) {
+        this.photoDesc = photoDesc;
+    }
+
+    public Bitmap getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Bitmap photo) {
+        this.photo = photo;
     }
 }

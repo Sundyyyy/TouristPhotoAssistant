@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,10 +17,10 @@ import java.util.List;
 
 public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.MyViewHolder> {
     private Context mContext;
-    private List<Task> taskList;
+    private List<Task> photoList;
     public RecyclerviewAdapter(Context context){
         mContext = context;
-        taskList = new ArrayList<>();
+        photoList = new ArrayList<>();
     }
     @NonNull
     @Override
@@ -29,26 +30,28 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     }
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Task task = taskList.get(position);
-        holder.tvTaskName.setText(task.getName());
-        holder.tvTaskDesc.setText(task.getDesc());
+        Task task = photoList.get(position);
+        holder.tvPhoto.setImageBitmap(task.getPhoto());
+        holder.tvPhotoDesc.setText(task.getPhotoDesc());
     }
     @Override
     public int getItemCount() {
-        return taskList.size();
+        return photoList.size();
     }
 
-    public void setTaskList(List<Task> taskList) {
-        this.taskList = taskList;
+    public void setPhotoList(List<Task> photoList) {
+        this.photoList = photoList;
         notifyDataSetChanged();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvTaskName;
-        private TextView tvTaskDesc;
+        private TextView tvPhotoBase64;
+        private TextView tvPhotoDesc;
+        private ImageView tvPhoto;
+
         public MyViewHolder(View itemView) {
             super(itemView);
-            tvTaskName = itemView.findViewById(R.id.task_name);
-            tvTaskDesc = itemView.findViewById(R.id.task_desc);
+            tvPhotoDesc = itemView.findViewById(R.id.photo_desc);
+            tvPhoto = itemView.findViewById(R.id.photo);
         }
     }
 }
