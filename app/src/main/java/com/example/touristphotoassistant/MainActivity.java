@@ -3,14 +3,12 @@ package com.example.touristphotoassistant;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.util.Log;
 
 import com.example.touristphotoassistant.ui.helper.ApplicationSettings;
-import com.example.touristphotoassistant.ui.photocard.RecyclerTouchListener;
-import com.example.touristphotoassistant.ui.photocard.RecyclerviewAdapter;
-import com.example.touristphotoassistant.ui.photocard.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +27,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
+    private static final int PERMISSION_REQUESTS = 1;
+
     final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
+
     public final static String[] listPermissions = {
             Manifest.permission.INTERNET,
             Manifest.permission.CAMERA
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        askForPermissions();
+        //askForPermissions();
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -56,7 +58,63 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
+        if (!allPermissionsGranted()) {
+            getRuntimePermissions();
+        }
+
     }
+
+//
+    private boolean allPermissionsGranted() {
+        for (String permission : getRequiredPermissions()) {
+            if (!isPermissionGranted(this, permission)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private String[] getRequiredPermissions() {
+        try {
+            PackageInfo info =
+                    this.getPackageManager()
+                            .getPackageInfo(this.getPackageName(), PackageManager.GET_PERMISSIONS);
+            String[] ps = info.requestedPermissions;
+            if (ps != null && ps.length > 0) {
+                return ps;
+            } else {
+                return new String[0];
+            }
+        } catch (Exception e) {
+            return new String[0];
+        }
+    }
+
+    private void getRuntimePermissions() {
+        List<String> allNeededPermissions = new ArrayList<>();
+        for (String permission : getRequiredPermissions()) {
+            if (!isPermissionGranted(this, permission)) {
+                allNeededPermissions.add(permission);
+            }
+        }
+
+        if (!allNeededPermissions.isEmpty()) {
+            ActivityCompat.requestPermissions(
+                    this, allNeededPermissions.toArray(new String[0]), PERMISSION_REQUESTS);
+        }
+    }
+
+    private static boolean isPermissionGranted(Context context, String permission) {
+        if (ContextCompat.checkSelfPermission(context, permission)
+                == PackageManager.PERMISSION_GRANTED) {
+            Log.i(TAG, "Permission granted: " + permission);
+            return true;
+        }
+        Log.i(TAG, "Permission NOT granted: " + permission);
+        return false;
+    }
+
+//
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -106,26 +164,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return isPermissionsAllowed();
     }
-
-/*
-    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener, DialogInterface.OnClickListener cancelListener) {
-        new AlertDialog.Builder(this)
-                .setTitle("Permission Denied")
-                .setMessage("Permission is denied, Please allow permissions from App Settings.")
-                .setPositiveButton("App Settings", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        intent = Intent()
-                        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                        val uri = Uri.fromParts("package", getPackageName(), null)
-                        intent.data = uri
-                        startActivity(intent)
-                    }
-                }
-                )
-                .setNegativeButton("Cancel",null)
-                .create()
-                .show();
-    }
-
- */
 }

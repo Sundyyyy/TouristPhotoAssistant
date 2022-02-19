@@ -5,7 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Base64;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +24,17 @@ import com.example.touristphotoassistant.ui.helper.ApplicationSettings;
 import com.example.touristphotoassistant.ui.photocard.RecyclerTouchListener;
 import com.example.touristphotoassistant.ui.photocard.RecyclerviewAdapter;
 import com.example.touristphotoassistant.ui.photocard.Task;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.label.ImageLabel;
+import com.google.mlkit.vision.label.ImageLabeler;
+import com.google.mlkit.vision.label.ImageLabeling;
+import com.google.mlkit.vision.label.defaults.ImageLabelerOptions;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +44,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerviewAdapter recyclerviewAdapter;
     private RecyclerTouchListener touchListener;
+    private String textResult;
 
     private static final int CAMERA_REQUEST = 9999;
     private ImageView imageView;
@@ -59,7 +68,7 @@ public class HomeFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"Take photo",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"Take photo",Toast.LENGTH_SHORT).show();
                 onTakePhoto();
             }
         });
@@ -141,19 +150,63 @@ public class HomeFragment extends Fragment {
         {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            photo.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] b = baos.toByteArray();
-            String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
 
-            Task task = new Task(encodedImage,encodedImage, photo);
-            taskList.add(task);
+            detectPhotoLabel(data);
 
             recyclerviewAdapter.setPhotoList(taskList);
-            //Bitmap photo = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(photo);
 
         }
     }
+
+    private void setTextResult(String text){
+        textResult = text;
+    }
+
+    private void detectPhotoLabel(Intent data){
+
+        InputImage image = InputImage.fromBitmap((Bitmap) data.getExtras().get("data"), 0); //rotationDegree: Only 0, 90, 180, 270 are supported
+/*
+        InputImage image = null;
+        try {
+            image = InputImage.fromFilePath(getContext(), data.getData());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+*/
+        // To use default options:
+        ImageLabeler labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS);
+        // Or, to set the minimum confidence required:
+        // ImageLabelerOptions options =
+        //     new ImageLabelerOptions.Builder()
+        //         .setConfidenceThreshold(0.7f)
+        //         .build();
+        // ImageLabeler labeler = ImageLabeling.getClient(options);
+
+
+        labeler.process(image)
+                .addOnSuccessListener(new OnSuccessListener<List<ImageLabel>>() {
+                    @Override
+                    public void onSuccess(List<ImageLabel> labels) {
+                        // Task completed successfully
+                        // ...
+                        textResult = "Success. List size: " + labels.size();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Task failed with an exception
+                        // ...
+                        textResult = e.toString();
+                    }
+                });
+
+        Task task = new Task("", textResult, (Bitmap) data.getExtras().get("data"));
+        taskList.add(task);
+    }
+
+
 
     @Override
     public void onDestroyView() {
