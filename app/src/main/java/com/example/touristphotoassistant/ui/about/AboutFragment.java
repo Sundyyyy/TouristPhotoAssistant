@@ -4,13 +4,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.touristphotoassistant.tensorflow.CameraActivity;
 import com.example.touristphotoassistant.databinding.FragmentAboutBinding;
+import com.example.touristphotoassistant.ui.helper.ApplicationSettings;
 
 public class AboutFragment extends Fragment {
 
@@ -26,6 +29,15 @@ public class AboutFragment extends Fragment {
 
         final TextView textView = binding.textAbout;
         userViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+        Button activityCameraButton =  binding.buttonCameraActivity;
+        activityCameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ApplicationSettings.runTOPActivity(CameraActivity.class, getActivity().getWindow(), getActivity());
+            }
+        });
+
         return root;
     }
 

@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.touristphotoassistant.R;
 import com.example.touristphotoassistant.databinding.FragmentHomeBinding;
+import com.example.touristphotoassistant.tensorflow.CameraActivity;
 import com.example.touristphotoassistant.ui.helper.ApplicationSettings;
 import com.example.touristphotoassistant.ui.photocard.RecyclerTouchListener;
 import com.example.touristphotoassistant.ui.photocard.RecyclerviewAdapter;
@@ -77,6 +78,14 @@ public class HomeFragment extends Fragment {
                 onTakePhoto();
             }
         });
+        fab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ApplicationSettings.runTOPActivity(CameraActivity.class, getActivity().getWindow(), getActivity());
+                return true;
+            }
+        });
+
 
         recyclerView = binding.recyclerview;
         recyclerviewAdapter = new RecyclerviewAdapter(this.getContext()); //this

@@ -17,7 +17,7 @@ import java.util.List;
 //<application
 //           android:name=".ApplicationSettings"
 // GitHub Token
-//  9447668: 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
+//  9447668: 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
 //  Sandyyy: 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
 //далее вызов там где надо - ApplicationSettings.getContext()
 

@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 
 import com.example.touristphotoassistant.ui.helper.ApplicationSettings;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -164,4 +165,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return isPermissionsAllowed();
     }
+
+
 }

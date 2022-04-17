@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.touristphotoassistant">
+
+    <uses-sdk
+        android:minSdkVersion="21"
+        android:targetSdkVersion="31" />
 
     <!-- необходим для передачи данных через Internet-->
     <uses-permission android:name="android.permission.INTERNET"
@@ -8,6 +13,10 @@
 
     <uses-permission android:name="android.permission.CAMERA"
         android:maxSdkVersion="32"/>
+
+    <!-- Declare features -->
+    <uses-feature android:name="android.hardware.camera" />
+
     <application
         android:name=".ui.helper.ApplicationSettings"
         android:allowBackup="true"
@@ -15,7 +24,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TouristPhotoAssistant">
+        android:theme="@style/Theme.TouristPhotoAssistant"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+
         <activity
             android:name=".ui.launcher.SplashScreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -41,6 +52,18 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".tensorflow.CameraActivity"
+            android:rotationAnimation="seamless"
+            android:theme="@style/AppTheme"
+            tools:targetApi="O"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
     </application>

@@ -9,4 +9,8 @@
     <string name="app_version">1.0.1</string>
 
     <string name="MLKit">Machine learning for mobile developers by Google</string>
+
+    <string name="capture_button_alt">Capture</string>
+    <string name="camera_button_close">Close</string>
+    <string name="unknown">UNKNOWN</string>
 </resources>

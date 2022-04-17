@@ -1,3 +1,4 @@
+/*
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -10,7 +11,13 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { // repo for TFLite snapshot
+            name 'ossrh-snapshot'
+            url 'https://oss.sonatype.org/content/repositories/snapshots'
+        }
     }
 }
 rootProject.name = "Tourist Photo Assistant"
+*/
+
 include ':app'
