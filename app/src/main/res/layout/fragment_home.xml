@@ -60,9 +60,11 @@
         android:layout_height="wrap_content"
 
         android:layout_gravity="bottom|center_horizontal"
+        android:layout_margin="10dp"
         android:contentDescription="@string/app_family_name"
         android:paddingBottom="?attr/actionBarSize"
-        android:layout_margin="10dp"
+        app:fabCustomSize="92dp"
+        app:maxImageSize="45dp"
         app:srcCompat="@drawable/ic_camera" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
