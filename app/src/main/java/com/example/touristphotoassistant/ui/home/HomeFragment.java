@@ -41,6 +41,7 @@ import com.google.mlkit.vision.label.defaults.ImageLabelerOptions;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class HomeFragment extends Fragment {
 
@@ -209,9 +210,12 @@ public class HomeFragment extends Fragment {
                                 String text = label.getText();
                                 float confidence = label.getConfidence();
                                 int index = label.getIndex();
-                                result += String.format("%d. Name: %s; Confidence: %.2f; Index: %d", i++, text, confidence, index);
+                                result += String.format(Locale.getDefault(),"%.2f %s", confidence, text);
+                                //result += String.format("%d. Name: %s; Confidence: %.2f; Index: %d", i++, text, confidence, index);
                                 result += _nl;
                             }
+                            result += _nl;
+                            result += "powered by google.mlkit.vision";
                         } else {
                             result = "Information not found";
                         }

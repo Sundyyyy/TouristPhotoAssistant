@@ -45,6 +45,7 @@ import androidx.core.content.ContextCompat;
 import com.example.touristphotoassistant.MainActivity;
 import com.example.touristphotoassistant.databinding.ActivityCameraBinding;
 import com.example.touristphotoassistant.ui.helper.ApplicationSettings;
+import com.example.touristphotoassistant.ui.photocard.PhotoX;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.gms.tflite.java.TfLite;
@@ -80,6 +81,8 @@ public final class CameraActivity extends AppCompatActivity {
   // The classifier is create after initialization succeeded
   private com.example.touristphotoassistant.tensorflow.ImageClassificationHelper classifier;
   private Activity _activity;
+  private List<PhotoX> photoList;
+  private PhotoX newPhoto;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,8 @@ public final class CameraActivity extends AppCompatActivity {
     activityCameraBinding = ActivityCameraBinding.inflate(this.getLayoutInflater());
     setContentView(activityCameraBinding.getRoot());
     _activity = this;
+
+    photoList = ApplicationSettings.getPhotoList();
 
     ImageButton buttonClose = activityCameraBinding.buttonClose;
     buttonClose.setOnClickListener(new View.OnClickListener() {
@@ -296,6 +301,14 @@ public final class CameraActivity extends AppCompatActivity {
                 true);
         activityCameraBinding.imagePredicted.setImageBitmap(uprightImage);
         activityCameraBinding.imagePredicted.setVisibility(View.VISIBLE);
+
+        //add picture to the list of Photos
+        newPhoto = new PhotoX("",  uprightImage);
+        String textPrediction = activityCameraBinding.textPrediction.getText().toString();
+        textPrediction += "\r\n";
+        textPrediction += "powered by tensorflow";
+        newPhoto.setDesc(textPrediction);
+        photoList.add(newPhoto);
       }
 
       // Re-enable camera controls
